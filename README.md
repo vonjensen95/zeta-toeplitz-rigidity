@@ -4,6 +4,10 @@ Code and paper for the note *"A Toeplitz positivity test on the angular
 distribution of zeta zeros, with an independent reproduction of the
 Connes-Consani-Moscovici spectral realization."*
 
+## DOI
+
+[10.5281/zenodo.21781659](https://doi.org/10.5281/zenodo.21781659)
+
 ## What is here
 
 - **`paper/`** — the note itself (`.tex` source and compiled `.pdf`).
@@ -76,6 +80,7 @@ Von Jensen. "A Toeplitz positivity test on the angular distribution of
 zeta zeros, with an independent reproduction of the Connes-Consani-
 Moscovici spectral realization." 2026.
 https://github.com/vonjensen95/zeta-toeplitz-rigidity
+https://doi.org/10.5281/zenodo.21781659
 ```
 
 ## Contact
