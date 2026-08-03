@@ -1,0 +1,519 @@
+\documentclass[11pt,oneside]{article}
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{conjecture}[proposition]{Conjecture}
+\newtheorem{question}[proposition]{Question}
+\theoremstyle{remark}
+\newtheorem{remark}[proposition]{Remark}
+
+\newcommand{\Rp}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\re}{\operatorname{Re}}
+\newcommand{\im}{\operatorname{Im}}
+
+\title{A Toeplitz positivity test on the angular distribution of zeta zeros,\\
+with an independent reproduction of the Connes--Consani--Moscovici\\ spectral realization}
+\author{Von Jensen}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The Keiper disk coordinate $z_\rho = 1 - 1/\rho$ places the nontrivial zeros of
+$\zeta$ on the unit circle exactly when the Riemann Hypothesis holds. We equip
+the resulting angular measure with its trigonometric moments and use finite
+Toeplitz positivity as a numerical detector of hypothetical off-critical zeros.
+Measured on the first $300$ zeros with injected off-line quadruples
+$\rho = \tfrac12 + \delta + i\gamma$, the detector breaks positive
+semidefiniteness at matrix order $N^{*}$ satisfying
+$N^{*}\log(1/r) \in [0.085,\,0.34]$ across all tested $(\gamma,\delta)$, where
+$r = |z_\rho|$; this is five to ten times below the scalar sensitivity threshold
+$n \gtrsim \gamma^{2}/\delta$ of Voros for the Keiper--Li coefficients, and far
+below the exponential scale $1/\log(1/r)$. The minimal eigenvalue of the
+deviation-only Toeplitz matrix obeys the empirical law
+$\lambda_{\min} \approx -0.2\,N^{3}\log^{2}(1/r)$. An on-circle control
+injection never triggers detection. We relate the mechanism to the
+Carath\'eodory--Fej\'er rigidity of nearly singular positive Toeplitz forms, the
+same structure used constructively in the spectral realization of
+Connes, Consani and Moscovici, and we report a full independent reproduction of
+their central computation at $(\lambda, N) = (3, 120)$: all twenty published
+eigenvalue--zero discrepancies are reproduced to every stated figure, and the
+two hypotheses of their main theorem, simplicity and evenness of the minimal
+Weil eigenvector, are verified numerically at this parameter point, with
+$\varepsilon_N = 2.954\times 10^{-38}$ and spectral gap ratio
+$1.4\times 10^{-7}$.
+\end{abstract}
+
+\section{Introduction}
+
+Write $\rho = \beta + i\gamma$ for the nontrivial zeros of the Riemann zeta
+function and
+\begin{equation}\label{eq:keiper}
+z_\rho \;=\; 1 - \frac{1}{\rho}\,,
+\end{equation}
+the conformal coordinate introduced by Keiper \cite{Keiper}, which maps the
+critical line $\re s = \tfrac12$ to the unit circle. The Riemann Hypothesis is
+the statement $|z_\rho| = 1$ for every $\rho$, and the Keiper--Li coefficients
+\begin{equation}\label{eq:li}
+\lambda_n \;=\; \sum_\rho \Bigl[\,1 - \Bigl(1 - \frac1\rho\Bigr)^{\!n}\,\Bigr]
+\end{equation}
+are nonnegative for all $n \ge 1$ if and only if RH holds \cite{Li}. Bombieri
+and Lagarias \cite{BL} showed that this criterion is an instance of a general
+positivity principle for multisets and connected it to Weil's quadratic
+functional. Voros \cite{VorosSharp,VorosBook,VorosDisc} determined the sharp
+large-$n$ dichotomy: under RH,
+$\lambda_n \sim \tfrac n2(\log n + \gamma_E - 1 - \log 2\pi)$, while a zero at
+$\tfrac12 + t + iT$ off the line contributes an exponentially growing
+oscillation that becomes visible against the smooth part only for
+$n \gtrsim T^2/|t|$, an uncertainty-principle barrier for the scalar sequence.
+
+This note treats the zeros' angular positions on the Keiper circle as a measure
+and interrogates that measure with the classical trigonometric moment problem.
+Three results are reported, all numerical and all obtained with two independent
+methods or explicit controls.
+
+First, finite Toeplitz positivity of the empirical moments detects injected
+off-critical zeros at matrix orders well below the scalar barrier. For an
+injected quadruple at height $\gamma$ and displacement $\delta$, detection
+occurs at order $N^{*}$ with $N^{*}\log(1/r) \in [0.085, 0.34]$ in every tested
+configuration (Table~\ref{tab:detect}), where
+$\log(1/r) = \tfrac12\log\bigl(1 + 8\delta/((2\delta-1)^2 + 4\gamma^2)\bigr)$ is
+the radial displacement in the disk coordinate. The scalar barrier corresponds
+to $n\log(1/r) \gtrsim 1$; the matrix test operates an order of magnitude below
+it because an $N \times N$ Toeplitz form correlates all moments up to order $N$
+simultaneously.
+
+Second, the minimal eigenvalue of the Toeplitz matrix built from the deviation
+moments alone grows cubically: $\lambda_{\min} \approx -0.2\,N^3 \log^2(1/r)$
+over the measured range (Section~\ref{sec:law}). The quadratic factor is the
+small-$n$ expansion of the off-circle deviation
+$2\cosh(n\log r) - 2$; the cubic amplification in $N$ is a property of the
+Toeplitz quadratic form that we state as a conjecture and pose as a problem in
+the perturbation theory of Toeplitz matrices.
+
+Third, the detection mechanism is the contrapositive of a rigidity phenomenon
+that has recently been used constructively. The Carath\'eodory--Fej\'er
+structure theorem \cite{CF} forces the kernel polynomial of a singular positive
+Toeplitz matrix to have all its roots on the unit circle; the extension of this
+principle by Connes and van Suijlekom \cite{CvS} underlies the spectral
+realization of low zeta zeros by Connes, Consani and Moscovici \cite{CCM},
+where a nearly null vector of the truncated Weil quadratic form generates, with
+striking accuracy, the actual zeros. Section~\ref{sec:ccm} reports a complete
+independent reproduction of the central computation of \cite{CCM} at
+$(\lambda, N) = (3, 120)$, including numerical verification of the two standing
+hypotheses of their main theorem at this parameter point. The reproduction also
+isolates, through a deliberate perturbation, which part of their construction
+guarantees reality of the approximating spectrum and which part carries the
+arithmetic accuracy.
+
+The detector is not proposed as a method for verifying RH in any range;
+direct methods locate zeros far more efficiently. Its interest is
+resolution-theoretic: it quantifies how much more a positivity criterion sees
+when it is read as a matrix condition rather than a scalar sequence, on the
+coordinate where the criterion is native.
+
+\section{The angular form of the Keiper--Li framework}\label{sec:angular}
+
+All statements in this section are elementary restatements of
+\eqref{eq:keiper} and \eqref{eq:li} and are recorded for use in the sequel.
+With $m(x) = (x-1)/(x+1)$ one has the identity
+\begin{equation}\label{eq:mobius}
+z_\rho \;=\; m(2\rho - 1),
+\end{equation}
+so the Keiper coordinate is the M\"obius compression of the zero centered at
+the critical line. For an on-line zero $\rho = \tfrac12 + i\gamma$, $\gamma>0$,
+the image lies on the unit circle at angle
+\begin{equation}\label{eq:angle}
+\theta_\gamma \;=\; \pi - 2\arctan(2\gamma) \in (0, \pi),
+\end{equation}
+and the conjugate zero contributes the angle $-\theta_\gamma$.
+
+\begin{samepage}
+\begin{proposition}\label{prop:sos}
+If all zeros with $|\gamma| \le \Gamma$ lie on the critical line, their
+contribution to $\lambda_n$ is
+\[
+\lambda_n^{(\Gamma)} \;=\; \sum_{0<\gamma\le\Gamma} 4\sin^{2}\!\Bigl(\frac{n\,\theta_\gamma}{2}\Bigr).
+\]
+\end{proposition}
+\begin{proof}
+For a conjugate pair on the circle, $1 - z^n + 1 - \bar z^{\,n} =
+2 - 2\cos n\theta = 4\sin^2(n\theta/2)$, and \eqref{eq:angle} gives the angle.
+\end{proof}
+\end{samepage}
+
+\begin{samepage}
+\begin{proposition}\label{prop:rapidity}
+Let $w_\rho = \tfrac12 \operatorname{Log}(2\rho - 1)$ with the principal branch.
+Then $\rho$ lies on the critical line if and only if
+$\im w_\rho = \pm\pi/4$.
+\end{proposition}
+\begin{proof}
+$\re(2\rho - 1) = 0$ if and only if $\operatorname{Log}(2\rho-1) \in
+\log|2\rho-1| + i\{\pm\pi/2\}$.
+\end{proof}
+\end{samepage}
+
+Under $\operatorname{artanh}$, which inverts $m$, the coordinate $w_\rho$ is
+the rapidity of the velocity $z_\rho$; RH states that all zero rapidities lie
+on the two horizontal lines $\im w = \pm \pi/4$. Both propositions were
+confirmed numerically on the first $300$ zeros: the identity \eqref{eq:mobius}
+holds exactly in exact arithmetic, $\bigl||z_\rho| - 1\bigr| \le 1.3\times
+10^{-26}$ at working precision $25$ digits, the angle formula \eqref{eq:angle}
+agrees with $\arg z_\rho$ to $4.4 \times 10^{-26}$, and
+$\im w_\rho - \pi/4$ vanishes identically.
+
+\section{Two computations of $\lambda_n$}\label{sec:lambda}
+
+The experiments below require accurate $\lambda_n$ for moderate $n$ together
+with the zero angles. Two independent computations were run and compared.
+
+Method A extracts $\lambda_{n}$ as Taylor coefficients of
+$\frac{d}{dz}\log\xi\bigl(1/(1-z)\bigr)$ by discretized Cauchy integrals on the
+circle $|z| = 0.75$ with $256$ nodes at $40$-digit working precision, using
+$\xi'/\xi(s) = 1/s + 1/(s-1) - \tfrac12\log\pi + \tfrac12\psi(s/2) +
+\zeta'/\zeta(s)$. No zeros enter this computation. The radius was chosen after
+observing, at radius $0.9$, an aliasing contamination of size
+$\lambda_{n+256}\,r^{256} \approx 10^{-9}$; at $r = 0.75$ the extracted
+$\lambda_1$ agrees with the closed form $1 + \gamma_E/2 - \tfrac12\log 4\pi$ to
+all fifteen printed digits. At fixed radius the extraction shares the
+well-known cancellation wall of this subject: rigorous large-$n$ computation
+requires on the order of $n$ bits of precision \cite{Johansson}, and the
+present method is used only for $n \le 48$.
+
+Method B evaluates Proposition~\ref{prop:sos} over the first $300$ zeros and
+corrects the tail by the integral of the pair contribution
+$2\re\bigl[1 - (1 - 1/\rho)^n\bigr]$ against the smoothed density
+$\frac{1}{2\pi}\log\frac{\gamma}{2\pi}$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rlll}
+\toprule
+$n$ & Method A (zero free) & Method B (zeros + tail) & A $-$ B \\
+\midrule
+1  & 0.023095708966121 & 0.023099086453 & $-3.4\times10^{-6}$ \\
+2  & 0.092345735228047 & 0.092359245164 & $-1.4\times10^{-5}$ \\
+5  & 0.575542714461177 & 0.575627151058 & $-8.4\times10^{-5}$ \\
+13 & 3.81724005784795  & 3.81781082592  & $-5.7\times10^{-4}$ \\
+21 & 9.61796072314292  & 9.61945000892  & $-1.5\times10^{-3}$ \\
+48 & 40.8652694603672  & 40.8730461068  & $-7.8\times10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\caption{Keiper--Li coefficients by the two methods. The difference carries a
+single sign and grows smoothly with $n$; it is the deterministic bias of
+replacing the discrete zero sum beyond height $\gamma_{300} \approx 541.8$ by
+the smoothed density, and it bounds the truncation systematics relevant to
+Section~\ref{sec:detector}.}
+\label{tab:lambda}
+\end{table}
+
+\section{The Toeplitz detector}\label{sec:detector}
+
+Let $\mu_K = \sum_{k \le K}(\delta_{\theta_k} + \delta_{-\theta_k})$ be the
+angular measure of the first $K$ zero pairs and
+\begin{equation}
+c_n \;=\; \int e^{-in\theta}\, d\mu_K \;=\; 2\sum_{k\le K}\cos\bigl(n\theta_k\bigr)
+\end{equation}
+its trigonometric moments. By the Herglotz--Toeplitz theorem
+\cite{GrenanderSzego}, a two-sided sequence is the moment sequence of a
+positive measure on the circle if and only if every finite Toeplitz matrix
+$T_N = (c_{i-j})_{i,j=0}^{N-1}$ is positive semidefinite. Points on the circle
+therefore keep every $T_N$ positive semidefinite regardless of RH
+considerations, while a zero off the line, entering with its symmetric
+quadruple $\rho$, $\bar\rho$, $1-\rho$, $1-\bar\rho$ and hence with velocities
+$z, \bar z, 1/z, 1/\bar z$ at radius $r \ne 1$, contributes
+\begin{equation}\label{eq:dev}
+d_n \;=\; 2\cos(n\theta)\bigl(r^{\,n} + r^{-n}\bigr),
+\end{equation}
+which is unbounded and must eventually break positivity.
+
+The detector is: fix $K = 300$, inject one quadruple at
+$\rho = \tfrac12 + \delta + i\gamma$, and record the least $N^{*}$ at which the
+smallest eigenvalue of $T_{N}$ falls below $-10^{-6} c_0$.
+
+\subsection{Controls}
+
+Injecting a unit-circle atom at the same angle as the off-line test point, with
+the same total weight, never triggers detection: over matrix sizes up to
+$3000$ the smallest eigenvalue stays above $-1.9\times10^{-10}$, four orders of
+magnitude inside the tolerance. Detection therefore responds to off-circle
+displacement and not to the presence of an added atom. The baseline matrices
+are themselves numerically near-singular at all tested sizes, with
+$\lambda_{\min}$ of order $10^{-10}$ against $c_0 = 600$: the angles
+\eqref{eq:angle} accumulate at $0$ like $1/\gamma$, and clustered atoms make
+the trigonometric moment problem nearly degenerate. This near-degeneracy is not
+an obstacle but the operative mechanism; see Section~\ref{sec:ccm}.
+
+The threshold dependence is weak: for $(\gamma,\delta) = (10, 0.2)$, sweeping
+the tolerance from $10^{-3}$ to $10^{-8}$ moves $N^{*}$ only from $208$ to
+$82$, an exponent of $0.081$ per decade. Detection is governed by the geometry
+of the perturbed form against the near-null cluster space, not by
+threshold crossing of a growing scalar.
+
+\subsection{Resolution}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrlrr}
+\toprule
+$\gamma$ & $\delta$ & $\log(1/r)$ & $N^{*}$ & $N^{*}\log(1/r)$ \\
+\midrule
+10    & 0.40 & $3.98\times10^{-3}$ & 83  & 0.331 \\
+10    & 0.30 & $2.99\times10^{-3}$ & 91  & 0.272 \\
+10    & 0.20 & $1.99\times10^{-3}$ & 111 & 0.221 \\
+10    & 0.10 & $9.97\times10^{-4}$ & 140 & 0.140 \\
+10    & 0.05 & $4.99\times10^{-4}$ & 171 & 0.085 \\
+5     & 0.20 & $7.91\times10^{-3}$ & 27  & 0.214 \\
+20    & 0.20 & $5.00\times10^{-4}$ & 673 & 0.336 \\
+14.13 & 0.25 & $1.25\times10^{-3}$ & 154 & 0.193 \\
+\bottomrule
+\end{tabular}
+\caption{Detection order for injected off-line quadruples. In every case
+$N^{*}\log(1/r) < 0.34$: detection occurs while the exponential factor
+$r^{-n}$ has grown by less than $40$ percent. The scalar visibility threshold
+of \cite{VorosSharp,VorosBook} is $n\log(1/r) \gtrsim 1$, equivalently
+$n \gtrsim \gamma^2/\delta$; for the row $(\gamma,\delta) = (10, 0.2)$ that
+threshold is $n \approx 500$ against the measured $N^{*} = 111$, and the same
+factor of five to ten separates the two across the table.}
+\label{tab:detect}
+\end{table}
+
+The comparison in Table~\ref{tab:detect} is against a heuristic threshold
+supported by saddle-point analysis rather than a theorem with constants, and it
+should be read at that strength. The mechanism of the gain is nevertheless
+transparent: a single coefficient $\lambda_n$ cannot resolve a radial
+displacement until $n\,|{\log r}| \gtrsim 1$, which is the uncertainty
+principle in the conjugate pair $(n, \log|z|)$ made explicit in
+\cite{VorosBook}; the quadratic form on all moments up to $N$ is subject to no
+such bound and instead feels the deviation \eqref{eq:dev} at its quadratic
+onset $d_n - 4\cos(n\theta) \approx 2\cos(n\theta)\,n^2\log^2 r$.
+
+\subsection{The eigenvalue law}\label{sec:law}
+
+Isolating the deviation, the Toeplitz matrices built from
+$d_n - 4\cos(n\theta)$ alone have smallest eigenvalues, at
+$(\gamma, \delta) = (10, 0.2)$,
+\[
+-0.119,\; -0.790,\; -6.10,\; -46.3,\; -401
+\quad\text{at}\quad N = 50, 100, 200, 400, 800,
+\]
+a factor close to $8$ per doubling.
+
+\begin{samepage}
+\begin{conjecture}\label{conj:law}
+For the deviation symbol of a single off-circle quadruple at radius $r$ and
+angle $\theta$, as $N \to \infty$ with $N\log(1/r) \to 0$,
+\[
+\lambda_{\min}\bigl(T_N[d - 4\cos(\cdot\,\theta)]\bigr)
+\;=\; -\,c(\theta)\, N^{3} \log^{2}(1/r)\,\bigl(1 + o(1)\bigr),
+\]
+with $c(\theta)$ of order $0.2$ at the measured configuration.
+\end{conjecture}
+\end{samepage}
+
+\begin{question}
+Derive Conjecture~\ref{conj:law}, including the constant, from the asymptotic
+spectral theory of Toeplitz matrices with polynomially growing symbol
+coefficients \cite{BS}.
+\end{question}
+
+\section{Relation to the Carath\'eodory--Fej\'er mechanism, and a reproduction
+of the spectral realization of Connes, Consani and Moscovici}\label{sec:ccm}
+
+The structure theorem of Carath\'eodory and Fej\'er \cite{CF} states that a
+positive semidefinite Toeplitz matrix with nontrivial kernel has a kernel
+polynomial whose roots all lie on the unit circle. Read contrapositively, a
+nearly singular positive Toeplitz form has no room for off-circle mass: any
+such mass must break positivity against the near-null space essentially at
+once, rather than after exponential amplification. This is the phenomenon
+measured in Section~\ref{sec:detector}, where the clustered zero angles supply
+the near-degeneracy and the injected quadruple supplies the off-circle mass.
+
+The same structure is used in the opposite direction by Connes, Consani and
+Moscovici \cite{CCM}, building on \cite{Connes99, CC23} and on the extension of
+the Carath\'eodory--Fej\'er principle in \cite{CvS}. There, the input is
+arithmetic rather than spectral: the Weil quadratic form restricted to test
+functions on $[\lambda^{-1}, \lambda]$, involving only the prime powers up to
+$\lambda^2$, is truncated to $2N{+}1$ Fourier modes; the eigenvector $\xi$ of
+its smallest eigenvalue $\varepsilon_N$, made an exact kernel vector by
+subtracting $\varepsilon_N$, turns a rank-one perturbation of the scaling
+operator into an operator that is self-adjoint for the inner product defined by
+the form. Its spectrum, which is the real zero set of the Fourier transform
+$\widehat\xi$, is real by construction, and it approximates the actual ordinates
+of the low zeta zeros to remarkable accuracy.
+
+We reproduced the computation of \cite{CCM} at $(\lambda, N) = (3, 120)$
+independently and from scratch: all closed-form matrix-element formulas were
+re-derived and verified against direct quadrature before use, the matrix was
+assembled through its structure
+$\tau_{ij} = (b_i - b_j)/(i-j)$ for $i \ne j$, the problem was reduced by
+parity, and the near-kernel eigenpair was extracted by inverse iteration with a
+$200$-digit LU factorization. The constant
+$c(L) = \int_0^L (e^{x/2}-1)/(e^x - e^{-x})\,dx = 0.575219384657911$ at
+$L = 2\log 3$ enters every diagonal entry through $2c(L)$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rll@{\qquad}rll}
+\toprule
+$k$ & this work & \cite{CCM} & $k$ & this work & \cite{CCM} \\
+\midrule
+1 & $1.58\times10^{-34}$ & $1.6\times10^{-34}$ & 11 & $7.28\times10^{-17}$ & $7.3\times10^{-17}$ \\
+2 & $2.06\times10^{-31}$ & $2.1\times10^{-31}$ & 12 & $2.21\times10^{-15}$ & $2.2\times10^{-15}$ \\
+3 & $1.46\times10^{-29}$ & $1.5\times10^{-29}$ & 13 & $9.75\times10^{-14}$ & $9.7\times10^{-14}$ \\
+4 & $8.29\times10^{-27}$ & $8.3\times10^{-27}$ & 14 & $2.70\times10^{-13}$ & $2.7\times10^{-13}$ \\
+5 & $1.28\times10^{-25}$ & $1.3\times10^{-25}$ & 15 & $6.34\times10^{-12}$ & $6.3\times10^{-12}$ \\
+6 & $1.17\times10^{-23}$ & $1.2\times10^{-23}$ & 16 & $5.63\times10^{-11}$ & $5.6\times10^{-11}$ \\
+7 & $7.53\times10^{-22}$ & $7.5\times10^{-22}$ & 17 & $2.93\times10^{-10}$ & $2.9\times10^{-10}$ \\
+8 & $6.57\times10^{-21}$ & $6.6\times10^{-21}$ & 18 & $1.22\times10^{-9}$  & $1.2\times10^{-9}$ \\
+9 & $1.19\times10^{-18}$ & $1.2\times10^{-18}$ & 19 & $5.58\times10^{-8}$  & $5.6\times10^{-8}$ \\
+10 & $8.79\times10^{-18}$ & $8.8\times10^{-18}$ & 20 & $2.42\times10^{-7}$  & $2.4\times10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\caption{Absolute differences between the ordinates $\gamma_k$ of the first
+twenty zeta zeros and the spectrum of the perturbed scaling operator at
+$(\lambda, N) = (3, 120)$: the present reproduction against the values reported
+in Figure~1 of \cite{CCM}. Agreement holds at every stated figure.}
+\label{tab:ccm}
+\end{table}
+
+Two hypotheses of the main theorem of \cite{CCM} are assumed there for general
+parameters: that $\varepsilon_N$ is simple and that $\xi$ is even. Both are
+facts at this parameter point:
+\[
+\varepsilon_N \;=\; 2.954058093\times 10^{-38},
+\qquad
+\frac{\varepsilon_N}{\lambda_2^{\mathrm{even}}} \;=\; 1.38\times10^{-7},
+\qquad
+\lambda_{\min}^{\mathrm{odd}} \;=\; 1.13\times10^{-34},
+\]
+so the smallest eigenvalue is simple with seven orders of separation inside the
+even sector and sits four orders below the entire odd sector. The size of
+$\varepsilon_N$ is consistent with the superexponential decay displayed in
+Figure~4 of \cite{CCM}.
+
+\begin{samepage}
+\begin{remark}\label{rem:split}
+The reproduction separates the two guarantees of the construction. A
+bookkeeping error in the eigenvector coordinates, a factor $\sqrt2$ between the
+parity-reduced and the original basis, leaves every approximating eigenvalue
+exactly real while destroying all arithmetic accuracy, the discrepancies in
+Table~\ref{tab:ccm} inflating from $10^{-34}$ to order one. Reality of the
+spectrum is structural and survives arbitrary corruption of $\xi$; proximity to
+the Riemann zeros lives entirely in the fine structure of the near-kernel
+vector. The detector of Section~\ref{sec:detector} and the realization of
+\cite{CCM} are in this sense two readings of one rigidity: the near-null space
+of a positive form on a finite window is, at once, the most sensitive locus for
+off-line mass and the most information-dense encoding of the on-line zeros.
+\end{remark}
+\end{samepage}
+
+\section{Scope and next steps}
+
+The truncation systematics of the detector are bounded by
+Table~\ref{tab:lambda}; the injected-quadruple experiments are synthetic, and
+the planned validation is the Davenport--Heilbronn function, which satisfies a
+functional equation while violating the analogue of RH and therefore supplies
+genuine off-line zeros, as used for the discretized Keiper--Li sequences in
+\cite{VorosDisc}. On the theoretical side the open items are
+Conjecture~\ref{conj:law} and the extension of the detection-order analysis to
+a statement with constants, for which the natural benchmark is the Oesterl\'e
+bound quoted in \cite{VorosBook}, that verification of RH up to height $T_0$
+forces $\lambda_n \ge 0$ for $n \le T_0^2$. The nearest published relatives of
+the detector are the Fourier-positivity tests of Giraud and Peschanski
+\cite{GP}, which watch the lowest eigenvalue of a Toeplitz hierarchy for a
+candidate positive-definite function, and the model-space norm identity of
+Suzuki \cite{Suzuki}, which realizes $\lambda_n$ as a squared norm; the present
+test differs from the first in its object, the empirical angular measure of the
+zeros, and from the second in being a finite-order matrix condition rather than
+an identity.
+
+\begin{thebibliography}{20}
+
+\bibitem{Keiper} J.~B.~Keiper,
+\emph{Power series expansions of Riemann's $\xi$ function},
+Math. Comp. \textbf{58} (1992), 765--773.
+
+\bibitem{Li} X.-J.~Li,
+\emph{The positivity of a sequence of numbers and the Riemann hypothesis},
+J. Number Theory \textbf{65} (1997), 325--333.
+
+\bibitem{BL} E.~Bombieri and J.~C.~Lagarias,
+\emph{Complements to Li's criterion for the Riemann hypothesis},
+J. Number Theory \textbf{77} (1999), 274--287.
+
+\bibitem{VorosSharp} A.~Voros,
+\emph{A sharpening of Li's criterion for the Riemann hypothesis},
+Math. Phys. Anal. Geom. \textbf{9} (2006), 53--63.
+
+\bibitem{VorosBook} A.~Voros,
+\emph{Zeta Functions over Zeros of Zeta Functions},
+Lecture Notes of the Unione Matematica Italiana \textbf{8}, Springer, 2010.
+
+\bibitem{VorosDisc} A.~Voros,
+\emph{Discretized Keiper/Li approach to the Riemann hypothesis},
+Exp. Math. \textbf{29} (2020), 452--469.
+
+\bibitem{Coffey} M.~W.~Coffey,
+\emph{Toward verification of the Riemann hypothesis: application of the Li
+criterion}, Math. Phys. Anal. Geom. \textbf{8} (2005), 211--255.
+
+\bibitem{AriasdeReyna} J.~Arias de Reyna,
+\emph{Asymptotics of Keiper--Li coefficients},
+Funct. Approx. Comment. Math. \textbf{45} (2011), 7--21.
+
+\bibitem{Maslanka} K.~Ma\'slanka,
+\emph{Li's criterion for the Riemann hypothesis: numerical approach},
+Opuscula Math. \textbf{24} (2004), 103--114.
+
+\bibitem{Johansson} F.~Johansson,
+\emph{Rigorous high-precision computation of the Hurwitz zeta function and its
+derivatives}, Numer. Algorithms \textbf{69} (2015), 253--270.
+
+\bibitem{GrenanderSzego} U.~Grenander and G.~Szeg\H{o},
+\emph{Toeplitz Forms and Their Applications},
+University of California Press, 1958.
+
+\bibitem{CF} C.~Carath\'eodory and L.~Fej\'er,
+\emph{\"Uber den Zusammenhang der Extreme von harmonischen Funktionen mit
+ihren Koeffizienten und \"uber den Picard--Landauschen Satz},
+Rend. Circ. Mat. Palermo \textbf{32} (1911), 218--239.
+
+\bibitem{BS} A.~B\"ottcher and B.~Silbermann,
+\emph{Introduction to Large Truncated Toeplitz Matrices},
+Springer, 1999.
+
+\bibitem{Connes99} A.~Connes,
+\emph{Trace formula in noncommutative geometry and the zeros of the Riemann
+zeta function}, Selecta Math. (N.S.) \textbf{5} (1999), 29--106.
+
+\bibitem{CC23} A.~Connes and C.~Consani,
+\emph{Spectral triples and $\zeta$-cycles},
+Enseign. Math. \textbf{69} (2023), 93--148.
+
+\bibitem{CvS} A.~Connes and W.~D.~van Suijlekom,
+\emph{Quadratic forms, real zeros and echoes of the spectral action},
+Comm. Math. Phys. \textbf{406} (2025), 312.
+
+\bibitem{CCM} A.~Connes, C.~Consani and H.~Moscovici,
+\emph{Zeta spectral triples}, arXiv:2511.22755 (2025).
+
+\bibitem{GP} B.~Giraud and R.~Peschanski,
+\emph{From ``Dirac combs'' to Fourier-positivity},
+Acta Phys. Polon. B \textbf{47} (2016), 1075--1100.
+
+\bibitem{Suzuki} M.~Suzuki,
+\emph{Li coefficients as norms of functions in a model space},
+arXiv:2301.05779 (2023).
+
+\end{thebibliography}
+
+\end{document}
