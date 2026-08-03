@@ -6,7 +6,7 @@ Connes-Consani-Moscovici spectral realization."*
 
 ## DOI
 
-[10.5281/zenodo.21781659](https://doi.org/10.5281/zenodo.21781659)
+[![DOI](https://zenodo.org/badge/1322286559.svg)](https://doi.org/10.5281/zenodo.21781658)
 
 ## What is here
 
